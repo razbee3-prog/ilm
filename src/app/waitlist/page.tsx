@@ -23,14 +23,25 @@ export default function WaitlistPage() {
         </div>
 
         {/* Hero Section */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-8">
           <p className="text-xl md:text-2xl text-gray-300 mb-2">
             Your personal AI Agent for digital workspace
           </p>
         </div>
 
+        {/* CTA Section */}
+        <div className="text-center mb-6">
+          <h2 className="text-3xl font-bold text-white mb-4">Join the waitlist</h2>
+          <p className="text-gray-400 mb-6 text-lg">
+            Be among the first to experience ilm. We'll notify you as soon as we launch.
+          </p>
+        </div>
+
+        {/* Form */}
+        <WaitlistForm />
+
         {/* Video Placeholder */}
-        <div className="mb-8 rounded-2xl overflow-hidden border border-white/10 bg-black/40 h-48 flex items-center justify-center">
+        <div className="mt-12 mb-8 rounded-2xl overflow-hidden border border-white/10 bg-black/40 h-48 flex items-center justify-center">
           <div className="text-center">
             <div className="text-white/40 mb-4">
               <Zap className="h-16 w-16 mx-auto" />
@@ -38,17 +49,6 @@ export default function WaitlistPage() {
             <p className="text-white/50 text-lg">Demo video coming soon</p>
           </div>
         </div>
-
-        {/* CTA Section */}
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-white mb-6">Join the waitlist</h2>
-          <p className="text-gray-400 mb-8 text-lg">
-            Be among the first to experience ilm. We'll notify you as soon as we launch.
-          </p>
-        </div>
-
-        {/* Form */}
-        <WaitlistForm />
 
         {/* Footer */}
         <div className="text-center mt-12 pt-8 border-t border-white/10">
