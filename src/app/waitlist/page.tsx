@@ -8,10 +8,10 @@ export const metadata = {
 
 export default function WaitlistPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-start justify-center pt-12 p-6">
       <div className="w-full max-w-2xl">
         {/* Logo */}
-        <div className="flex justify-center mb-12">
+        <div className="flex justify-center mb-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-yellow-400 via-orange-400 to-pink-400 flex items-center justify-center">
               <Zap className="h-6 w-6 text-white" />
@@ -23,14 +23,14 @@ export default function WaitlistPage() {
         </div>
 
         {/* Hero Section */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-6">
           <p className="text-xl md:text-2xl text-gray-300 mb-2">
             Your personal AI Agent for digital workspace
           </p>
         </div>
 
         {/* Video Placeholder */}
-        <div className="mb-12 rounded-2xl overflow-hidden border border-white/10 bg-black/40 aspect-video flex items-center justify-center">
+        <div className="mb-8 rounded-2xl overflow-hidden border border-white/10 bg-black/40 h-48 flex items-center justify-center">
           <div className="text-center">
             <div className="text-white/40 mb-4">
               <Zap className="h-16 w-16 mx-auto" />
