@@ -1,5 +1,6 @@
-import { Zap } from "lucide-react";
+import { Zap, Play } from "lucide-react";
 import { WaitlistForm } from "@/components/waitlist/WaitlistForm";
+import { VideoModal } from "@/components/waitlist/VideoModal";
 
 export const metadata = {
   title: "ilm - Join the Waitlist",
@@ -7,6 +8,9 @@ export const metadata = {
 };
 
 export default function WaitlistPage() {
+  const videoId = "uxhTwou2Tvo";
+  const videoThumbnail = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-start justify-center pt-12 p-6">
       <div className="w-full max-w-2xl">
@@ -40,19 +44,27 @@ export default function WaitlistPage() {
         {/* Form */}
         <WaitlistForm />
 
-        {/* Demo Video */}
-        <div className="mt-12 mb-8 rounded-2xl overflow-hidden border border-white/10 bg-black/40">
-          <div className="aspect-video">
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/uxhTwou2Tvo"
-              title="ilm Demo"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+        {/* Demo Video Thumbnail */}
+        <VideoModal videoId={videoId}>
+          <div className="mt-12 mb-8 rounded-2xl overflow-hidden border border-white/10 bg-black/40 group cursor-pointer relative aspect-video">
+            {/* Video Thumbnail */}
+            <img
+              src={videoThumbnail}
+              alt="ilm Demo"
+              className="w-full h-full object-cover group-hover:opacity-75 transition-opacity"
             />
+
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
+
+            {/* Play Button */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-20 h-20 rounded-full bg-white/20 group-hover:bg-white/30 transition-colors flex items-center justify-center backdrop-blur-sm">
+                <Play className="w-10 h-10 text-white ml-1" fill="white" />
+              </div>
+            </div>
           </div>
-        </div>
+        </VideoModal>
 
         {/* Footer */}
         <div className="text-center mt-12 pt-8 border-t border-white/10">
