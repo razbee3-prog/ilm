@@ -30,11 +30,20 @@ async function getCalendarClient() {
     credentials.installed.redirect_uris[0]
   );
 
-  oauth2Client.setCredentials({
+  // Set credentials - only include fields that exist
+  const credentialsToSet: any = {
     refresh_token: tokens.refresh_token,
-    access_token: tokens.access_token,
-    expiry_date: tokens.expiry_date,
-  });
+  };
+
+  if (tokens.access_token) {
+    credentialsToSet.access_token = tokens.access_token;
+  }
+
+  if (tokens.expiry_date) {
+    credentialsToSet.expiry_date = tokens.expiry_date;
+  }
+
+  oauth2Client.setCredentials(credentialsToSet);
 
   return google.calendar({ version: "v3", auth: oauth2Client });
 }

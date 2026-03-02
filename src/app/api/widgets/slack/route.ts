@@ -124,14 +124,45 @@ export async function GET() {
       );
     }
 
-    // Run searches in parallel — each independently guarded
-    const [mentionsResult, dmsResult] = await Promise.allSettled([
+    // Try multiple search strategies
+    const [mentionsResult, unreadResult, recentResult] = await Promise.allSettled([
       client.callTool({ name: "slack_search_public_and_private", arguments: { query: "to:me is:unread", limit: 10 } }),
-      client.callTool({ name: "slack_search_public_and_private", arguments: { query: "is:dm is:unread has:text", limit: 8 } }),
+      client.callTool({ name: "slack_search_public_and_private", arguments: { query: "is:unread", limit: 10 } }),
+      client.callTool({ name: "slack_search_public_and_private", arguments: { query: "to:me", limit: 10 } }),
     ]);
 
-    const mentions = mentionsResult.status === "fulfilled" ? parseResult(mentionsResult.value) : [];
-    const dms = dmsResult.status === "fulfilled" ? parseResult(dmsResult.value) : [];
+    console.log("[Slack] Search results:", {
+      mentions: mentionsResult.status === "fulfilled" ? "fulfilled" : (mentionsResult as any).reason?.message,
+      unread: unreadResult.status === "fulfilled" ? "fulfilled" : (unreadResult as any).reason?.message,
+      recent: recentResult.status === "fulfilled" ? "fulfilled" : (recentResult as any).reason?.message,
+    });
+
+    // Try mentions first, fall back to unread, then recent
+    let mentions: SlackMessage[] = [];
+    let dms: SlackMessage[] = [];
+
+    if (mentionsResult.status === "fulfilled") {
+      mentions = parseResult(mentionsResult.value);
+    }
+
+    if (mentions.length === 0 && unreadResult.status === "fulfilled") {
+      mentions = parseResult(unreadResult.value);
+    }
+
+    if (mentions.length === 0 && recentResult.status === "fulfilled") {
+      const recent = parseResult(recentResult.value);
+      // Filter out bots and system messages
+      mentions = recent.filter(m => !m.from?.includes("Bot") && !m.from?.includes("System"));
+    }
+
+    // Try to get DMs separately
+    const dmsResult = await Promise.allSettled([
+      client.callTool({ name: "slack_search_public_and_private", arguments: { query: "is:dm is:unread", limit: 8 } }),
+    ]);
+
+    if (dmsResult[0].status === "fulfilled") {
+      dms = parseResult(dmsResult[0].value);
+    }
 
     return NextResponse.json({
       mentions: mentions.slice(0, 8),

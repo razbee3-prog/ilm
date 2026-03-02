@@ -40,13 +40,17 @@ export default function WaitlistPage() {
         {/* Form */}
         <WaitlistForm />
 
-        {/* Video Placeholder */}
-        <div className="mt-12 mb-8 rounded-2xl overflow-hidden border border-white/10 bg-black/40 h-48 flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-white/40 mb-4">
-              <Zap className="h-16 w-16 mx-auto" />
-            </div>
-            <p className="text-white/50 text-lg">Demo video coming soon</p>
+        {/* Demo Video */}
+        <div className="mt-12 mb-8 rounded-2xl overflow-hidden border border-white/10 bg-black/40">
+          <div className="aspect-video">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/uxhTwou2Tvo"
+              title="ilm Demo"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
           </div>
         </div>
 

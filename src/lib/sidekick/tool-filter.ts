@@ -137,11 +137,13 @@ export function filterToolsByRelevance(
       }
     }
 
-    // Include built-in tools that might be useful
-    if (
-      toolName.includes("memory") ||
-      toolName.includes("builtin")
-    ) {
+    // Always include built-in tools (calendar, email, etc.)
+    if (toolName.includes("builtin")) {
+      return true;
+    }
+
+    // Always include memory tools
+    if (toolName.includes("memory")) {
       return true;
     }
 

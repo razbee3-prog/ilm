@@ -21,11 +21,19 @@ async function getGmailClient() {
     credentials.installed.redirect_uris[0]
   );
 
-  oauth2Client.setCredentials({
+  const credentialsToSet: any = {
     refresh_token: tokens.refresh_token,
-    access_token: tokens.access_token,
-    expiry_date: tokens.expiry_date,
-  });
+  };
+
+  if (tokens.access_token) {
+    credentialsToSet.access_token = tokens.access_token;
+  }
+
+  if (tokens.expiry_date) {
+    credentialsToSet.expiry_date = tokens.expiry_date;
+  }
+
+  oauth2Client.setCredentials(credentialsToSet);
 
   return google.gmail({ version: "v1", auth: oauth2Client });
 }
