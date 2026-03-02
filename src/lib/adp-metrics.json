@@ -1,0 +1,24 @@
+{
+  "revenue": {
+    "current": 16300000000,
+    "yoy_change": 7.2,
+    "currency": "USD"
+  },
+  "clients": {
+    "current": 12500000,
+    "yoy_change": 3.8
+  },
+  "retention_rate": {
+    "current": 94.2,
+    "yoy_change": 0.5,
+    "unit": "%"
+  },
+  "growth": {
+    "current": 7.2,
+    "yoy_change": 2.1,
+    "period": "YoY",
+    "unit": "%"
+  },
+  "lastUpdated": "2024-12-15T00:00:00Z",
+  "source": "Q4 2024 Earnings Report"
+}
