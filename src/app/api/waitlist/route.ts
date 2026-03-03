@@ -1,6 +1,39 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
+async function sendEmailAlert(email: string) {
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const alertEmail = process.env.WAITLIST_ALERT_EMAIL;
+
+  if (!resendApiKey || !alertEmail) {
+    console.warn("Resend or alert email not configured");
+    return;
+  }
+
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${resendApiKey}`,
+      },
+      body: JSON.stringify({
+        from: "noreply@ilm.app",
+        to: alertEmail,
+        subject: "new registration",
+        html: `<p>New waitlist signup:</p><p><strong>${email}</strong></p>`,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error("Failed to send email alert:", error);
+    }
+  } catch (error) {
+    console.error("Error sending email alert:", error);
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { email } = await request.json();
@@ -36,6 +69,9 @@ export async function POST(request: NextRequest) {
       }
       throw error;
     }
+
+    // Send email alert asynchronously (don't wait for it)
+    sendEmailAlert(email);
 
     return NextResponse.json(
       { success: true, message: "Successfully joined the waitlist!" },
