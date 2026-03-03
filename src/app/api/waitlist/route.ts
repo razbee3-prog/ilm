@@ -18,7 +18,7 @@ async function sendEmailAlert(email: string) {
         Authorization: `Bearer ${resendApiKey}`,
       },
       body: JSON.stringify({
-        from: "noreply@ilm.app",
+        from: "onboarding@resend.dev",
         to: alertEmail,
         subject: "new registration",
         html: `<p>New waitlist signup:</p><p><strong>${email}</strong></p>`,
